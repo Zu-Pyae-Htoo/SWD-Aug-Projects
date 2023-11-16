@@ -8,15 +8,18 @@ const listGroup = document.querySelector("#list-group");
 
 const createList = (text) => {
   const list = document.createElement("div");
+//   const id = "ListCheck" + (Math.random()*100000).toFixed(0);
+    const id = "listCheck" + Date.now();
   list.classList.add("list");
   list.innerHTML = `
   <div class="border border-neutral-700 p-3 flex justify-between mb-3">
-    <div id="content" class=" flex gap-5">
-      <input type="checkbox" name="" id="check-box" />
-      <label for="check-box" class="">${text}</label>
+    <div id="content" class="content" flex gap-5">
+    <input type="checkbox" name="" id="${id}" />
+    <label for="${id}" class="list-text ">${text}</label>
+       
     </div>
     <div id="control" class=" flex gap-3">
-      <button>
+      <button class="edit-btn">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -52,12 +55,28 @@ const createList = (text) => {
   </div>`;
 
   inputText.value = null;
-    const delBtn = list.querySelector(".del-btn");
-    delBtn.addEventListener("click",()=>{
-        if(confirm("Are you sure to delet?")){
-            list.remove();
-        }
-    })
+  const delBtn = list.querySelector(".del-btn");
+  delBtn.addEventListener("click", () => {
+    if (confirm("Are you sure to delet?")) {
+      list.remove();
+    }
+  });
+  const content = list.querySelector(".content");
+  const editBtn = list.querySelector(".edit-btn");
+
+  editBtn.addEventListener("click", () => {
+    const listText = list.querySelector(".list-text");
+    const input = document.createElement("input");
+    input.value = listText.innerText;
+    input.className = "border border-neutral-700 py-1";
+    content.innerHTML = "";
+    content.append(input);
+
+    input.addEventListener("blur", () => {
+      content.innerHTML = ` <input type="checkbox" name="" id="check-box" />
+      <label for="check-box" class="list-text">${input.value}</label>`;
+    });
+  });
 
   return list;
 };
@@ -68,15 +87,13 @@ const listCounter = () => {
   listCount.innerText = total;
 };
 
-
-
 //event-handler
 
 const btnAddHandler = () => {
-    if(inputText.value){
-        listGroup.append(createList(inputText.value));
-        listCounter();
-    }
+  if (inputText.value) {
+    listGroup.append(createList(inputText.value));
+    listCounter();
+  }
 };
 
 // event-listener
