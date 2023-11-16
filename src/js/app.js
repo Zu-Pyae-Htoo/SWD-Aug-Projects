@@ -8,25 +8,25 @@ const listGroup = document.querySelector("#list-group");
 
 const createList = (text) => {
   const list = document.createElement("div");
-//   const id = "ListCheck" + (Math.random()*100000).toFixed(0);
-    const id = "listCheck" + Date.now();
+  //   const id = "ListCheck" + (Math.random()*100000).toFixed(0);
+  const id = "listCheck" + Date.now();
   list.classList.add("list");
   list.innerHTML = `
-  <div class="border border-neutral-700 p-3 flex justify-between mb-3">
+  <div class=" group border border-neutral-700 p-3 flex justify-between mb-3 overflow-hidden">
     <div id="content" class="content" flex gap-5">
-    <input type="checkbox" name="" id="${id}" />
+    <input type="checkbox" name="" id="${id}" class="list-check  accent-gray-600 "/>
     <label for="${id}" class="list-text ">${text}</label>
        
     </div>
-    <div id="control" class=" flex gap-3">
-      <button class="edit-btn">
+    <div id="control" class=" flex gap-3  translate-x-[160%] group-hover:translate-x-0 duration-300 group-hover:opacity-100 opacity-50">
+      <button class="edit-btn active:scale-90 ">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="w-5 h-5"
+          class="w-5 h-5 stroke-1"
         >
           <path
             stroke-linecap="round"
@@ -35,14 +35,14 @@ const createList = (text) => {
           />
         </svg>
       </button>
-      <button class="del-btn">
+      <button class="del-btn active:scale-90">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="w-5 h-5"
+          class="w-5 h-5 stroke-1"
         >
           <path
             stroke-linecap="round"
@@ -68,7 +68,7 @@ const createList = (text) => {
     const listText = list.querySelector(".list-text");
     const input = document.createElement("input");
     input.value = listText.innerText;
-    input.className = "border border-neutral-700 py-1";
+    input.className = "border border-neutral-700 py-1 px-2";
     content.innerHTML = "";
     content.append(input);
 
@@ -77,14 +77,26 @@ const createList = (text) => {
       <label for="check-box" class="list-text">${input.value}</label>`;
     });
   });
+  const listCheck = list.querySelector(".list-check");
+  listCheck.addEventListener("change", () => {
+    // console.log('check');
+    const listText = list.querySelector(".list-text");
+    listText.classList.toggle("line-through");
+    listCounter();
+  });
 
   return list;
 };
 
 const listCounter = () => {
   const total = document.querySelectorAll(".list").length;
+  const totalChecked = document.querySelectorAll(".list-check:checked").length;
   //   console.log(total);
+  console.log(totalChecked);
   listCount.innerText = total;
+  doneCount.innerText = totalChecked;
+
+  return total;
 };
 
 //event-handler
