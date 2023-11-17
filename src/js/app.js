@@ -3,6 +3,7 @@ const btnAdd = document.querySelector("#btn-add");
 const doneCount = document.querySelector("#done-count");
 const listCount = document.querySelector("#list-count");
 const listGroup = document.querySelector("#list-group");
+const delAll = document.querySelector("#del-all")
 
 // function
 
@@ -12,7 +13,7 @@ const createList = (text) => {
   const id = "listCheck" + Date.now();
   list.classList.add("list");
   list.innerHTML = `
-  <div class=" group border border-neutral-700 p-3 flex justify-between mb-3 overflow-hidden">
+  <div class=" group border border-neutral-700 p-3 flex justify-between mb-3 overflow-hidden animate__animated animate__fadeInUp">
     <div id="content" class="content" flex gap-5">
     <input type="checkbox" name="" id="${id}" class="list-check  accent-gray-600 "/>
     <label for="${id}" class="list-text ">${text}</label>
@@ -108,5 +109,13 @@ const btnAddHandler = () => {
   }
 };
 
+const delAllHandler = () => {
+  const lists = document.querySelectorAll(".list");
+  if(confirm("Are you sure to delet all?")){
+    lists.forEach(el => el.remove());
+  }
+}
+
 // event-listener
 btnAdd.addEventListener("click", btnAddHandler);
+delAll.addEventListener("click",delAllHandler)
