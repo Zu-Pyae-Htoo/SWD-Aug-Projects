@@ -3,7 +3,7 @@ const btnAdd = document.querySelector("#btn-add");
 const doneCount = document.querySelector("#done-count");
 const listCount = document.querySelector("#list-count");
 const listGroup = document.querySelector("#list-group");
-const delAll = document.querySelector("#del-all")
+const delAll = document.querySelector("#del-all");
 
 // function
 
@@ -86,6 +86,12 @@ const createList = (text) => {
     listCounter();
   });
 
+  // app.addEventListener("keyup", (event) => {
+  //   if (event.key === "Backspace") {
+  //     list.remove();
+  //   }
+  // });
+
   return list;
 };
 
@@ -111,11 +117,22 @@ const btnAddHandler = () => {
 
 const delAllHandler = () => {
   const lists = document.querySelectorAll(".list");
-  if(confirm("Are you sure to delet all?")){
-    lists.forEach(el => el.remove());
+  if (confirm("Are you sure to delet all?")) {
+    lists.forEach((el) => el.remove());
   }
-}
+};
+
+const inputTextHandler = (event) => {
+  // console.log(event);
+  // console.log(event.target.value);
+  // console.log(event.key);
+  if (event.key === "Enter") {
+    listGroup.append(createList(inputText.value));
+    listCounter();
+  }
+};
 
 // event-listener
 btnAdd.addEventListener("click", btnAddHandler);
-delAll.addEventListener("click",delAllHandler)
+delAll.addEventListener("click", delAllHandler);
+inputText.addEventListener("keyup", inputTextHandler);
